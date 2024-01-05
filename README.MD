@@ -21,25 +21,14 @@ GoCore is a comprehensive Golang API starter kit that provides a solid foundatio
 ## Project Structure
 
 root\
-├── cmd\
-│   ├── api // for run api service command\
-│   └── migration // for run migration command\
-├── config\
-├── docs // auto gen swagger api docs\
-├── functions // function run independent with api service\
-│   └── migration\
-├── internal\
-│   ├── api // logic for http\
-│   ├── functions // logic for function\
-│   ├── model // declare entities\
-│   └── util // internal utilities\
-├── pkg // for reusable\
-│   ├── mock\
-│   ├── rbac\
-│   ├── server\
-│   └── util\
-├── scripts // bash script for run command\
-└── vendor // dependencies package
+├── cmd               // first entry for run command\
+├── config            // logic for process config\
+├── docs              // auto gen swagger api docs\
+├── functions         // function run independent with api service\
+├── internal          // main logic of service\
+├── pkg               // for reusable\
+├── scripts           // bash script for run command\
+└── vendor            // dependencies package
 
 ## Prerequisites
 
@@ -54,7 +43,6 @@ root\
 
 1. Initialize the app for the first time:
    ```bash
-   make depends
    make provision
    ```
 2. Generate swagger API docs:
@@ -63,7 +51,7 @@ root\
    ```
 3. Run the development server:
    ```bash
-   make start
+   make dev
    ```
 
 The application runs as an HTTP server at port 8080. You can log in as superadmin to the application by:
@@ -93,5 +81,5 @@ Comming soon
 ## Installation
 
 ```bash
-go get -u https://github.com/vuduongtp/gocore.git
+go get -u github.com/vuduongtp/go-core
 ```

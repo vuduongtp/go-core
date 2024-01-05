@@ -1,6 +1,7 @@
 package user
 
 import (
+	"context"
 	"net/http"
 	"strings"
 
@@ -20,13 +21,13 @@ type HTTP struct {
 
 // Service represents user application interface
 type Service interface {
-	Create(*model.AuthUser, CreationData) (*model.User, error)
-	View(*model.AuthUser, int) (*model.User, error)
-	List(*model.AuthUser, *dbutil.ListQueryCondition, *int64) ([]*model.User, error)
-	Update(*model.AuthUser, int, UpdateData) (*model.User, error)
-	Delete(*model.AuthUser, int) error
-	Me(*model.AuthUser) (*model.User, error)
-	ChangePassword(*model.AuthUser, PasswordChangeData) error
+	Create(context.Context, *model.AuthUser, CreationData) (*model.User, error)
+	View(context.Context, *model.AuthUser, int) (*model.User, error)
+	List(context.Context, *model.AuthUser, *dbutil.ListQueryCondition, *int64) ([]*model.User, error)
+	Update(context.Context, *model.AuthUser, int, UpdateData) (*model.User, error)
+	Delete(context.Context, *model.AuthUser, int) error
+	Me(context.Context, *model.AuthUser) (*model.User, error)
+	ChangePassword(context.Context, *model.AuthUser, PasswordChangeData) error
 }
 
 // NewHTTP creates new user http service
@@ -77,20 +78,20 @@ type ListResp struct {
 	TotalCount int64         `json:"total_count"`
 }
 
-//	@Security		BearerToken
-//	@Summary		Creates new user
-//	@Description	The new user
-//	@Accept			json
-//	@Produce		json
-//	@Tags			users
-//	@ID				usersCreate
-//	@Param			request		body		user.CreationData	true	"CreationData"
-//	@Success		200			{object}	model.User
-//	@Failure		400			{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		401			{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		403			{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		500			{object}	swaggerutil.SwaggErrDetailsResp
-//	@Router			/v1/users	[post]
+// @Security		BearerToken
+// @Summary		Creates new user
+// @Description	The new user
+// @Accept			json
+// @Produce		json
+// @Tags			users
+// @ID				usersCreate
+// @Param			request		body		user.CreationData	true	"CreationData"
+// @Success		200			{object}	model.User
+// @Failure		400			{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401			{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		403			{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		500			{object}	swaggerutil.SwaggErrDetailsResp
+// @Router			/v1/users	[post]
 func (h *HTTP) create(c echo.Context) error {
 	r := CreationData{}
 	if err := c.Bind(&r); err != nil {
@@ -106,7 +107,7 @@ func (h *HTTP) create(c echo.Context) error {
 		return err
 	}
 
-	resp, err := h.svc.Create(h.auth.User(c), r)
+	resp, err := h.svc.Create(c.Request().Context(), h.auth.User(c), r)
 	if err != nil {
 		return err
 	}
@@ -114,27 +115,27 @@ func (h *HTTP) create(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-//	@Security		BearerToken
-//	@Summary		Returns a single user
-//	@Description	Returns a single user
-//	@Accept			json
-//	@Produce		json
-//	@Tags			users
-//	@ID				usersView
-//	@Param			id				path		int	true	"User ID"
-//	@Success		200				{object}	model.User
-//	@Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Router			/v1/users/{id}	[get]
+// @Security		BearerToken
+// @Summary		Returns a single user
+// @Description	Returns a single user
+// @Accept			json
+// @Produce		json
+// @Tags			users
+// @ID				usersView
+// @Param			id				path		int	true	"User ID"
+// @Success		200				{object}	model.User
+// @Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
+// @Router			/v1/users/{id}	[get]
 func (h *HTTP) view(c echo.Context) error {
 	id, err := httputil.ReqID(c)
 	if err != nil {
 		return err
 	}
-	resp, err := h.svc.View(h.auth.User(c), id)
+	resp, err := h.svc.View(c.Request().Context(), h.auth.User(c), id)
 	if err != nil {
 		return err
 	}
@@ -142,27 +143,27 @@ func (h *HTTP) view(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-//	@Security		BearerToken
-//	@Summary		Get list user
-//	@Description	Get list user
-//	@Accept			json
-//	@Produce		json
-//	@Tags			users
-//	@ID				usersList
-//	@Param			q			query		swagger.ListRequest	false	"QueryListRequest"
-//	@Success		200			{object}	user.ListResp
-//	@Failure		400			{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		401			{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		403			{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		500			{object}	swaggerutil.SwaggErrDetailsResp
-//	@Router			/v1/users	[get]
+// @Security		BearerToken
+// @Summary		Get list user
+// @Description	Get list user
+// @Accept			json
+// @Produce		json
+// @Tags			users
+// @ID				usersList
+// @Param			q			query		swagger.ListRequest	false	"QueryListRequest"
+// @Success		200			{object}	user.ListResp
+// @Failure		400			{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401			{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		403			{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		500			{object}	swaggerutil.SwaggErrDetailsResp
+// @Router			/v1/users	[get]
 func (h *HTTP) list(c echo.Context) error {
 	lq, err := httputil.ReqListQuery(c)
 	if err != nil {
 		return err
 	}
 	var count int64 = 0
-	resp, err := h.svc.List(h.auth.User(c), lq, &count)
+	resp, err := h.svc.List(c.Request().Context(), h.auth.User(c), lq, &count)
 	if err != nil {
 		return err
 	}
@@ -170,22 +171,22 @@ func (h *HTTP) list(c echo.Context) error {
 	return c.JSON(http.StatusOK, ListResp{resp, count})
 }
 
-//	@Security		BearerToken
-//	@Summary		Updates user information
-//	@Description	Updates user information
-//	@Accept			json
-//	@Produce		json
-//	@Tags			users
-//	@ID				usersUpdate
-//	@Param			id				path		int				true	"User ID"
-//	@Param			request			body		user.UpdateData	true	"UpdateData"
-//	@Success		200				{object}	model.User
-//	@Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Router			/v1/users/{id}	[patch]
+// @Security		BearerToken
+// @Summary		Updates user information
+// @Description	Updates user information
+// @Accept			json
+// @Produce		json
+// @Tags			users
+// @ID				usersUpdate
+// @Param			id				path		int				true	"User ID"
+// @Param			request			body		user.UpdateData	true	"UpdateData"
+// @Success		200				{object}	model.User
+// @Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
+// @Router			/v1/users/{id}	[patch]
 func (h *HTTP) update(c echo.Context) error {
 	id, err := httputil.ReqID(c)
 	if err != nil {
@@ -205,7 +206,7 @@ func (h *HTTP) update(c echo.Context) error {
 		return err
 	}
 
-	resp, err := h.svc.Update(h.auth.User(c), id, r)
+	resp, err := h.svc.Update(c.Request().Context(), h.auth.User(c), id, r)
 	if err != nil {
 		return err
 	}
@@ -213,49 +214,49 @@ func (h *HTTP) update(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-//	@Security		BearerToken
-//	@Summary		Deletes an user
-//	@Description	Deletes an user
-//	@Accept			json
-//	@Produce		json
-//	@Tags			users
-//	@ID				usersDelete
-//	@Param			id				path		int	true	"User ID"
-//	@Success		200				{object}	swaggerutil.SwaggOKResp
-//	@Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Router			/v1/users/{id}	[delete]
+// @Security		BearerToken
+// @Summary		Deletes an user
+// @Description	Deletes an user
+// @Accept			json
+// @Produce		json
+// @Tags			users
+// @ID				usersDelete
+// @Param			id				path		int	true	"User ID"
+// @Success		200				{object}	swaggerutil.SwaggOKResp
+// @Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
+// @Router			/v1/users/{id}	[delete]
 func (h *HTTP) delete(c echo.Context) error {
 	id, err := httputil.ReqID(c)
 	if err != nil {
 		return err
 	}
-	if err := h.svc.Delete(h.auth.User(c), id); err != nil {
+	if err := h.svc.Delete(c.Request().Context(), h.auth.User(c), id); err != nil {
 		return err
 	}
 
 	return c.NoContent(http.StatusOK)
 }
 
-//	@Security		BearerToken
-//	@Summary		Returns authenticated user
-//	@Description	Returns authenticated user
-//	@Accept			json
-//	@Produce		json
-//	@Tags			users
-//	@ID				usersMe
-//	@Success		200				{object}	model.User
-//	@Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
-//	@Router			/v1/users/me	[get]
+// @Security		BearerToken
+// @Summary		Returns authenticated user
+// @Description	Returns authenticated user
+// @Accept			json
+// @Produce		json
+// @Tags			users
+// @ID				usersMe
+// @Success		200				{object}	model.User
+// @Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
+// @Router			/v1/users/me	[get]
 func (h *HTTP) me(c echo.Context) error {
-	resp, err := h.svc.Me(h.auth.User(c))
+	resp, err := h.svc.Me(c.Request().Context(), h.auth.User(c))
 	if err != nil {
 		return err
 	}
@@ -263,27 +264,27 @@ func (h *HTTP) me(c echo.Context) error {
 	return c.JSON(http.StatusOK, resp)
 }
 
-//	@Security		BearerToken
-//	@Summary		Changes authenticated user password
-//	@Description	Changes authenticated user password
-//	@Accept			json
-//	@Produce		json
-//	@Tags			users
-//	@ID				usersChangePwd
-//	@Param			request				body		user.PasswordChangeData	true	"PasswordChangeData"
-//	@Success		200					{object}	swaggerutil.SwaggOKResp
-//	@Failure		400					{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		401					{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		403					{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		404					{object}	swaggerutil.SwaggErrDetailsResp
-//	@Failure		500					{object}	swaggerutil.SwaggErrDetailsResp
-//	@Router			/v1/users/password	[get]
+// @Security		BearerToken
+// @Summary		Changes authenticated user password
+// @Description	Changes authenticated user password
+// @Accept			json
+// @Produce		json
+// @Tags			users
+// @ID				usersChangePwd
+// @Param			request				body		user.PasswordChangeData	true	"PasswordChangeData"
+// @Success		200					{object}	swaggerutil.SwaggOKResp
+// @Failure		400					{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401					{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		403					{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		404					{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		500					{object}	swaggerutil.SwaggErrDetailsResp
+// @Router			/v1/users/password	[get]
 func (h *HTTP) changePassword(c echo.Context) error {
 	r := PasswordChangeData{}
 	if err := c.Bind(&r); err != nil {
 		return err
 	}
-	if err := h.svc.ChangePassword(h.auth.User(c), r); err != nil {
+	if err := h.svc.ChangePassword(c.Request().Context(), h.auth.User(c), r); err != nil {
 		return err
 	}
 

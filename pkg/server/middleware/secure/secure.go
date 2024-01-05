@@ -7,6 +7,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/thoas/go-funk"
+	"github.com/vuduongtp/go-core/pkg/util/logger"
+	"github.com/vuduongtp/go-logadapter"
 )
 
 // Config represents secure specific config
@@ -60,9 +62,9 @@ func BodyDump() echo.MiddlewareFunc {
 				reqBody, _ = json.Marshal(bodymap)
 			}
 			if funk.ContainsString([]string{"Content-Disposition: form-data"}, string(reqBody)) {
-				c.Logger().Debug("Request Body: ", "multipart/form-data")
+				logger.LogWithContext(c.Request().Context(), "Request Body: multipart/form-data", logadapter.LogTypeRequest)
 			}
-			c.Logger().Debug("Request Body: ", string(reqBody))
+			logger.LogWithContext(c.Request().Context(), string(reqBody), logadapter.LogTypeRequest)
 		}
 
 		if (c.Request().Method == "PATCH" || c.Request().Method == "POST") && len(resBody) > 0 {
@@ -76,9 +78,9 @@ func BodyDump() echo.MiddlewareFunc {
 				resBody, _ = json.Marshal(bodymap)
 			}
 			if funk.ContainsString([]string{"Content-Disposition: form-data"}, string(reqBody)) {
-				c.Logger().Debug("Request Body: ", "multipart/form-data")
+				logger.LogWithContext(c.Request().Context(), "Request Body: multipart/form-data", logadapter.LogTypeResponse)
 			}
-			c.Logger().Debug("Response Body: ", string(resBody))
+			logger.LogWithContext(c.Request().Context(), string(resBody), logadapter.LogTypeResponse)
 		}
 	})
 }

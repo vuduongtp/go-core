@@ -16,3 +16,4 @@ coverage-all.out
 /up.json
 *.code-workspace
 /tmp
+/logs

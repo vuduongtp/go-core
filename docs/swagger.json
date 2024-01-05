@@ -6,10 +6,10 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a sample server Core server.",
-        "title": "Swagger Example API",
+        "title": "GoCore Example API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "Kevin",
+            "name": "DuongVu",
             "url": "http://www.swagger.io/support",
             "email": "vuduongcalvin@gmail.com"
         },

@@ -213,14 +213,14 @@ definitions:
 info:
   contact:
     email: vuduongcalvin@gmail.com
-    name: Kevin
+    name: DuongVu
     url: http://www.swagger.io/support
   description: This is a sample server Core server.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Swagger Example API
+  title: GoCore Example API
   version: "1.0"
 paths:
   /login:

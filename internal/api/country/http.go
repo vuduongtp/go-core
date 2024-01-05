@@ -1,6 +1,7 @@
 package country
 
 import (
+	"context"
 	"net/http"
 	"regexp"
 	"strings"
@@ -21,11 +22,11 @@ type HTTP struct {
 
 // Service represents country application interface
 type Service interface {
-	Create(*model.AuthUser, CreationData) (*model.Country, error)
-	View(*model.AuthUser, int) (*model.Country, error)
-	List(*model.AuthUser, *dbutil.ListQueryCondition, *int64) ([]*model.Country, error)
-	Update(*model.AuthUser, int, UpdateData) (*model.Country, error)
-	Delete(*model.AuthUser, int) error
+	Create(context.Context, *model.AuthUser, CreationData) (*model.Country, error)
+	View(context.Context, *model.AuthUser, int) (*model.Country, error)
+	List(context.Context, *model.AuthUser, *dbutil.ListQueryCondition, *int64) ([]*model.Country, error)
+	Update(context.Context, *model.AuthUser, int, UpdateData) (*model.Country, error)
+	Delete(context.Context, *model.AuthUser, int) error
 }
 
 // NewHTTP creates new country http service
@@ -93,7 +94,7 @@ func (h *HTTP) create(c echo.Context) error {
 		return server.NewHTTPValidationError("PhoneCode is invalid")
 	}
 
-	resp, err := h.svc.Create(h.auth.User(c), r)
+	resp, err := h.svc.Create(c.Request().Context(), h.auth.User(c), r)
 	if err != nil {
 		return err
 	}
@@ -119,7 +120,7 @@ func (h *HTTP) view(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	resp, err := h.svc.View(h.auth.User(c), id)
+	resp, err := h.svc.View(c.Request().Context(), h.auth.User(c), id)
 	if err != nil {
 		return err
 	}
@@ -147,7 +148,7 @@ func (h *HTTP) list(c echo.Context) error {
 		return err
 	}
 	var count int64 = 0
-	resp, err := h.svc.List(h.auth.User(c), lq, &count)
+	resp, err := h.svc.List(c.Request().Context(), h.auth.User(c), lq, &count)
 	if err != nil {
 		return err
 	}
@@ -184,7 +185,7 @@ func (h *HTTP) update(c echo.Context) error {
 	r.Code = httputil.TrimSpacePointer(r.Code)
 	r.PhoneCode = httputil.RemoveSpacePointer(r.PhoneCode)
 
-	usr, err := h.svc.Update(h.auth.User(c), id, r)
+	usr, err := h.svc.Update(c.Request().Context(), h.auth.User(c), id, r)
 	if err != nil {
 		return err
 	}
@@ -212,7 +213,7 @@ func (h *HTTP) delete(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	if err := h.svc.Delete(h.auth.User(c), id); err != nil {
+	if err := h.svc.Delete(c.Request().Context(), h.auth.User(c), id); err != nil {
 		return err
 	}
 

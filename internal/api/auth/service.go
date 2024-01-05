@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"time"
 
 	"github.com/vuduongtp/go-core/internal/model"
@@ -30,8 +31,8 @@ type Auth struct {
 // UserDB represents user repository interface
 type UserDB interface {
 	dbutil.Intf
-	FindByUsername(*gorm.DB, string) (*model.User, error)
-	FindByRefreshToken(*gorm.DB, string) (*model.User, error)
+	FindByUsername(context.Context, *gorm.DB, string) (*model.User, error)
+	FindByRefreshToken(context.Context, *gorm.DB, string) (*model.User, error)
 }
 
 // JWT represents token generator (jwt) interface

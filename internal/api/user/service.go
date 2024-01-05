@@ -1,6 +1,8 @@
 package user
 
 import (
+	"context"
+
 	"github.com/vuduongtp/go-core/internal/model"
 	"github.com/vuduongtp/go-core/pkg/rbac"
 	dbutil "github.com/vuduongtp/go-core/pkg/util/db"
@@ -24,7 +26,7 @@ type User struct {
 // MyDB represents user repository interface
 type MyDB interface {
 	dbutil.Intf
-	FindByUsername(*gorm.DB, string) (*model.User, error)
+	FindByUsername(context.Context, *gorm.DB, string) (*model.User, error)
 }
 
 // Crypter represents security interface

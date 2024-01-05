@@ -17,6 +17,7 @@ type Configuration struct {
 	AllowOrigins    []string `env:"ALLOW_ORIGINS"`
 	Debug           bool     `env:"DEBUG"`
 	DbLog           bool     `env:"DB_LOG"`
+	DbType          string   `env:"DB_TYPE"`
 	DbDsn           string   `env:"DB_DSN"`
 	JwtSecret       string   `env:"JWT_SECRET"`
 	JwtDuration     int      `env:"JWT_DURATION"`

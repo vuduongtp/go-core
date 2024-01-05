@@ -11,7 +11,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "Kevin",
+            "name": "DuongVu",
             "url": "http://www.swagger.io/support",
             "email": "vuduongcalvin@gmail.com"
         },
@@ -1272,7 +1272,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "/",
 	Schemes:          []string{"http", "https"},
-	Title:            "Swagger Example API",
+	Title:            "GoCore Example API",
 	Description:      "This is a sample server Core server.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

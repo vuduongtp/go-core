@@ -2,17 +2,28 @@ package dbutil
 
 import (
 	dbutil "github.com/vuduongtp/go-core/pkg/util/db"
+	"github.com/vuduongtp/go-logadapter"
 
-	"github.com/imdatngo/gowhere"
 	_ "gorm.io/driver/postgres" // DB adapter
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 // New creates new database connection to the database server
-func New(dbPsn string, enableLog bool) (*gorm.DB, error) {
-	gowhere.DefaultConfig.Dialect = gowhere.DialectMySQL
+func New(dbType, dbPsn string, enableLog bool) (*gorm.DB, error) {
 	config := new(gorm.Config)
-	return dbutil.New("postgres", dbPsn, config)
+	db, err := dbutil.New(dbType, dbPsn, config)
+	if err != nil {
+		return nil, err
+	}
+
+	if enableLog {
+		db.Logger = logadapter.NewGormLogger().LogMode(logger.Info)
+	} else {
+		db.Logger = logadapter.NewGormLogger().LogMode(logger.Silent)
+	}
+
+	return db, nil
 }
 
 // NewDB creates new DB instance

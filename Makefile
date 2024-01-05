@@ -18,11 +18,6 @@ provision: depends ## Provision dev environment
 	scripts/waitdb.sh
 	@$(MAKE) migrate
 
-start: ## Bring up the server on dev environment
-	docker-compose up -d
-	sh scripts/waitdb.sh
-	sh scripts/watcher.sh
-
 dev: ## Bring up the server on dev environment with hot reload
 	docker-compose up -d
 	sh scripts/waitdb.sh

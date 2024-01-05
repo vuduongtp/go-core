@@ -3,10 +3,12 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/go-playground/validator/v10"
-	"github.com/labstack/echo/v4"
 	"net/http"
 	"strings"
+
+	"github.com/go-playground/validator/v10"
+	"github.com/labstack/echo/v4"
+	"github.com/vuduongtp/go-core/pkg/util/logger"
 )
 
 const (
@@ -95,8 +97,8 @@ func (ce *ErrorHandler) Handle(err error, c echo.Context) {
 		if e.Message != "" {
 			httpErr.Message = e.Message
 		}
-		if e.Internal != nil {
-			ce.e.Logger.Errorf("internal err: %+v", e.Internal)
+		if e.Internal != nil && !c.Response().Committed {
+			logger.LogError(c.Request().Context(), fmt.Sprintf("internal err: %+v", e.Internal))
 		}
 
 	case *echo.HTTPError:
@@ -114,8 +116,8 @@ func (ce *ErrorHandler) Handle(err error, c echo.Context) {
 		default:
 			httpErr.Message = fmt.Sprintf("%+v", em)
 		}
-		if e.Internal != nil {
-			ce.e.Logger.Errorf("internal err: %+v", e.Internal)
+		if e.Internal != nil && !c.Response().Committed {
+			logger.LogError(c.Request().Context(), fmt.Sprintf("internal err: %+v", e.Internal))
 		}
 
 	case validator.ValidationErrors:
@@ -140,7 +142,7 @@ func (ce *ErrorHandler) Handle(err error, c echo.Context) {
 			err = c.JSON(httpErr.Code, ErrorResponse{Error: httpErr})
 		}
 		if err != nil {
-			ce.e.Logger.Error(err)
+			logger.LogError(c.Request().Context(), err)
 		}
 	}
 }

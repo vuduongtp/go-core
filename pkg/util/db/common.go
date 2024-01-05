@@ -1,6 +1,7 @@
 package dbutil
 
 import (
+	"context"
 	"reflect"
 	"strings"
 
@@ -25,28 +26,28 @@ type DB struct {
 type Intf interface {
 	// Create creates a new record on database.
 	// `input` must be a non-nil pointer of the model. e.g: `input := &model.User{}`
-	Create(db *gorm.DB, input interface{}) error
+	Create(ctx context.Context, db *gorm.DB, input interface{}) error
 	// View returns single record matching the given conditions.
 	// `output` must be a non-nil pointer of the model. e.g: `output := new(model.User)`
 	// Note: RecordNotFound error is returned when there is no record that matches the conditions
-	View(db *gorm.DB, output interface{}, cond ...interface{}) error
+	View(ctx context.Context, db *gorm.DB, output interface{}, cond ...interface{}) error
 	// List returns list of records retrievable after filter & pagination if given.
 	// `output` must be a non-nil pointer of slice of the model. e.g: `data := []*model.User{}; db.List(dbconn, &data, nil, nil)`
 	// `lq` can be nil, then no filter & pagination are applied
 	// `count` can also be nil, then no extra query is executed to get the total count
-	List(db *gorm.DB, output interface{}, lq *ListQueryCondition, count *int64) error
+	List(ctx context.Context, db *gorm.DB, output interface{}, lq *ListQueryCondition, count *int64) error
 	// Update updates data of the records matching the given conditions.
 	// `updates` could be a model struct or map[string]interface{}
 	// Note: DB.Model must be provided in order to get the correct model/table
-	Update(db *gorm.DB, updates interface{}, cond ...interface{}) error
+	Update(ctx context.Context, db *gorm.DB, updates interface{}, cond ...interface{}) error
 	// Delete deletes record matching given conditions.
 	// `cond` can be an instance of the model, then primary key will be used as the condition
-	Delete(db *gorm.DB, cond ...interface{}) error
+	Delete(ctx context.Context, db *gorm.DB, cond ...interface{}) error
 	// Exist checks whether there is record matching the given conditions.
-	Exist(db *gorm.DB, cond ...interface{}) (bool, error)
+	Exist(ctx context.Context, db *gorm.DB, cond ...interface{}) (bool, error)
 	// CreateInBatches creates batch of new record on database.
 	// `input` must be a array non-nil pointer of the model. e.g: `input := []*model.User`
-	CreateInBatches(db *gorm.DB, input interface{}, batchSize int) error
+	CreateInBatches(ctx context.Context, db *gorm.DB, input interface{}, batchSize int) error
 	// ParseCond returns standard [sqlString, vars] format for query, powered by gowhere package (with default config)
 	ParseCond(cond ...interface{}) []interface{}
 }
@@ -60,20 +61,20 @@ type ListQueryCondition struct {
 }
 
 // Create creates a new record on database.
-func (cdb *DB) Create(db *gorm.DB, input interface{}) error {
-	cdb.GDB = db.Create(input)
+func (cdb *DB) Create(ctx context.Context, db *gorm.DB, input interface{}) error {
+	cdb.GDB = db.WithContext(ctx).Create(input)
 	return cdb.GDB.Error
 }
 
 // View returns single record matching the given conditions.
-func (cdb *DB) View(db *gorm.DB, output interface{}, cond ...interface{}) error {
+func (cdb *DB) View(ctx context.Context, db *gorm.DB, output interface{}, cond ...interface{}) error {
 	where := parseCond(cond...)
-	cdb.GDB = db.First(output, where...)
+	cdb.GDB = db.WithContext(ctx).First(output, where...)
 	return cdb.GDB.Error
 }
 
 // List returns list of records retrievable after filter & pagination if given.
-func (cdb *DB) List(db *gorm.DB, output interface{}, lq *ListQueryCondition, count *int64) error {
+func (cdb *DB) List(ctx context.Context, db *gorm.DB, output interface{}, lq *ListQueryCondition, count *int64) error {
 	if lq != nil {
 		if lq.Filter != nil {
 			db = db.Where(lq.Filter.SQL(), lq.Filter.Vars()...)
@@ -92,7 +93,7 @@ func (cdb *DB) List(db *gorm.DB, output interface{}, lq *ListQueryCondition, cou
 		}
 	}
 
-	cdb.GDB = db.Find(output)
+	cdb.GDB = db.WithContext(ctx).Find(output)
 	if err := cdb.GDB.Error; err != nil {
 		return err
 	}
@@ -108,18 +109,18 @@ func (cdb *DB) List(db *gorm.DB, output interface{}, lq *ListQueryCondition, cou
 }
 
 // Update updates data of the records matching the given conditions.
-func (cdb *DB) Update(db *gorm.DB, updates interface{}, cond ...interface{}) error {
+func (cdb *DB) Update(ctx context.Context, db *gorm.DB, updates interface{}, cond ...interface{}) error {
 	db = db.Model(cdb.Model)
 	if len(cond) > 0 {
 		where := parseCond(cond...)
 		db = db.Where(where[0], where[1:]...)
 	}
-	cdb.GDB = db.Omit("id").Updates(updates)
+	cdb.GDB = db.WithContext(ctx).Omit("id").Updates(updates)
 	return cdb.GDB.Error
 }
 
 // Delete deletes record matching given conditions.
-func (cdb *DB) Delete(db *gorm.DB, cond ...interface{}) error {
+func (cdb *DB) Delete(ctx context.Context, db *gorm.DB, cond ...interface{}) error {
 	if len(cond) == 1 {
 		newCond := cond[0]
 		cType := reflect.TypeOf(newCond)
@@ -132,22 +133,22 @@ func (cdb *DB) Delete(db *gorm.DB, cond ...interface{}) error {
 	}
 
 	where := parseCond(cond...)
-	cdb.GDB = db.Delete(cdb.Model, where...)
+	cdb.GDB = db.WithContext(ctx).Delete(cdb.Model, where...)
 	return cdb.GDB.Error
 }
 
 // Exist checks whether there is record matching the given conditions.
-func (cdb *DB) Exist(db *gorm.DB, cond ...interface{}) (bool, error) {
+func (cdb *DB) Exist(ctx context.Context, db *gorm.DB, cond ...interface{}) (bool, error) {
 	var count int64
 	count = 0
 	where := parseCond(cond...)
-	cdb.GDB = db.Model(cdb.Model).Where(where[0], where[1:]...).Count(&count)
+	cdb.GDB = db.WithContext(ctx).Model(cdb.Model).Where(where[0], where[1:]...).Count(&count)
 	return count > 0, cdb.GDB.Error
 }
 
 // CreateInBatches creates batch of new record on database.
-func (cdb *DB) CreateInBatches(db *gorm.DB, input interface{}, batchSize int) error {
-	cdb.GDB = db.CreateInBatches(input, batchSize)
+func (cdb *DB) CreateInBatches(ctx context.Context, db *gorm.DB, input interface{}, batchSize int) error {
+	cdb.GDB = db.WithContext(ctx).CreateInBatches(input, batchSize)
 	return cdb.GDB.Error
 }
 

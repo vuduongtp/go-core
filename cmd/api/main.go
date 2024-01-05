@@ -15,14 +15,15 @@ import (
 	"github.com/vuduongtp/go-core/pkg/server/middleware/jwt"
 	"github.com/vuduongtp/go-core/pkg/util/crypter"
 	swaggerutil "github.com/vuduongtp/go-core/pkg/util/swagger"
+	"github.com/vuduongtp/go-logadapter"
 )
 
-//	@title			Swagger Example API
+//	@title			GoCore Example API
 //	@version		1.0
 //	@description	This is a sample server Core server.
 //	@termsOfService	http://swagger.io/terms/
 
-//	@contact.name	Kevin
+//	@contact.name	DuongVu
 //	@contact.url	http://www.swagger.io/support
 //	@contact.email	vuduongcalvin@gmail.com
 
@@ -40,7 +41,7 @@ func main() {
 	cfg, err := config.Load()
 	checkErr(err)
 
-	db, err := dbutil.New(cfg.DbDsn, cfg.DbLog)
+	db, err := dbutil.New(cfg.DbType, cfg.DbDsn, cfg.DbLog)
 	checkErr(err)
 	// connection.Close() is not available for GORM 1.20.0
 	// defer db.Close()
@@ -92,6 +93,7 @@ func main() {
 
 func checkErr(err error) {
 	if err != nil {
+		logadapter.Panic(err)
 		panic(err)
 	}
 }

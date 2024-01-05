@@ -1,6 +1,7 @@
 package user
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/vuduongtp/go-core/internal/model"
@@ -18,12 +19,12 @@ var (
 )
 
 // Create creates a new user account
-func (s *User) Create(authUsr *model.AuthUser, data CreationData) (*model.User, error) {
+func (s *User) Create(ctx context.Context, authUsr *model.AuthUser, data CreationData) (*model.User, error) {
 	if err := s.enforce(authUsr, model.ActionCreateAll); err != nil {
 		return nil, err
 	}
 
-	if existed, err := s.udb.Exist(s.db, map[string]interface{}{"username": data.Username}); err != nil || existed {
+	if existed, err := s.udb.Exist(ctx, s.db, map[string]interface{}{"username": data.Username}); err != nil || existed {
 		return nil, ErrUsernameExisted.SetInternal(err)
 	}
 
@@ -38,7 +39,7 @@ func (s *User) Create(authUsr *model.AuthUser, data CreationData) (*model.User, 
 		Role:      data.Role,
 	}
 
-	if err := s.udb.Create(s.db, rec); err != nil {
+	if err := s.udb.Create(ctx, s.db, rec); err != nil {
 		return nil, server.NewHTTPInternalError("Error creating user").SetInternal(err)
 	}
 
@@ -46,13 +47,13 @@ func (s *User) Create(authUsr *model.AuthUser, data CreationData) (*model.User, 
 }
 
 // View returns single user
-func (s *User) View(authUsr *model.AuthUser, id int) (*model.User, error) {
+func (s *User) View(ctx context.Context, authUsr *model.AuthUser, id int) (*model.User, error) {
 	if err := s.enforce(authUsr, model.ActionViewAll); err != nil {
 		return nil, err
 	}
 
 	rec := new(model.User)
-	if err := s.udb.View(s.db, rec, id); err != nil {
+	if err := s.udb.View(ctx, s.db, rec, id); err != nil {
 		return nil, ErrUserNotFound.SetInternal(err)
 	}
 
@@ -60,13 +61,13 @@ func (s *User) View(authUsr *model.AuthUser, id int) (*model.User, error) {
 }
 
 // List returns list of users
-func (s *User) List(authUsr *model.AuthUser, lq *dbutil.ListQueryCondition, count *int64) ([]*model.User, error) {
+func (s *User) List(ctx context.Context, authUsr *model.AuthUser, lq *dbutil.ListQueryCondition, count *int64) ([]*model.User, error) {
 	if err := s.enforce(authUsr, model.ActionViewAll); err != nil {
 		return nil, err
 	}
 
 	var data []*model.User
-	if err := s.udb.List(s.db, &data, lq, count); err != nil {
+	if err := s.udb.List(ctx, s.db, &data, lq, count); err != nil {
 		return nil, server.NewHTTPInternalError("Error listing user").SetInternal(err)
 	}
 
@@ -74,19 +75,19 @@ func (s *User) List(authUsr *model.AuthUser, lq *dbutil.ListQueryCondition, coun
 }
 
 // Update updates user information
-func (s *User) Update(authUsr *model.AuthUser, id int, data UpdateData) (*model.User, error) {
+func (s *User) Update(ctx context.Context, authUsr *model.AuthUser, id int, data UpdateData) (*model.User, error) {
 	if err := s.enforce(authUsr, model.ActionUpdateAll); err != nil {
 		return nil, err
 	}
 
 	// optimistic update
 	updates := structutil.ToMap(data)
-	if err := s.udb.Update(s.db, updates, id); err != nil {
+	if err := s.udb.Update(ctx, s.db, updates, id); err != nil {
 		return nil, server.NewHTTPInternalError("Error updating user").SetInternal(err)
 	}
 
 	rec := new(model.User)
-	if err := s.udb.View(s.db, rec, id); err != nil {
+	if err := s.udb.View(ctx, s.db, rec, id); err != nil {
 		return nil, ErrUserNotFound.SetInternal(err)
 	}
 
@@ -94,16 +95,16 @@ func (s *User) Update(authUsr *model.AuthUser, id int, data UpdateData) (*model.
 }
 
 // Delete deletes a user
-func (s *User) Delete(authUsr *model.AuthUser, id int) error {
+func (s *User) Delete(ctx context.Context, authUsr *model.AuthUser, id int) error {
 	if err := s.enforce(authUsr, model.ActionDeleteAll); err != nil {
 		return err
 	}
 
-	if existed, err := s.udb.Exist(s.db, id); err != nil || !existed {
+	if existed, err := s.udb.Exist(ctx, s.db, id); err != nil || !existed {
 		return ErrUserNotFound.SetInternal(err)
 	}
 
-	if err := s.udb.Delete(s.db, id); err != nil {
+	if err := s.udb.Delete(ctx, s.db, id); err != nil {
 		return server.NewHTTPInternalError("Error deleting user").SetInternal(err)
 	}
 
@@ -111,17 +112,17 @@ func (s *User) Delete(authUsr *model.AuthUser, id int) error {
 }
 
 // Me returns authenticated user
-func (s *User) Me(authUsr *model.AuthUser) (*model.User, error) {
+func (s *User) Me(ctx context.Context, authUsr *model.AuthUser) (*model.User, error) {
 	rec := new(model.User)
-	if err := s.udb.View(s.db, rec, authUsr.ID); err != nil {
+	if err := s.udb.View(ctx, s.db, rec, authUsr.ID); err != nil {
 		return nil, ErrUserNotFound.SetInternal(err)
 	}
 	return rec, nil
 }
 
 // ChangePassword changes authenticated user password
-func (s *User) ChangePassword(authUsr *model.AuthUser, data PasswordChangeData) error {
-	rec, err := s.Me(authUsr)
+func (s *User) ChangePassword(ctx context.Context, authUsr *model.AuthUser, data PasswordChangeData) error {
+	rec, err := s.Me(ctx, authUsr)
 	if err != nil {
 		return err
 	}
@@ -131,7 +132,7 @@ func (s *User) ChangePassword(authUsr *model.AuthUser, data PasswordChangeData) 
 	}
 
 	hashedPwd := s.cr.HashPassword(data.NewPassword)
-	if err = s.udb.Update(s.db, map[string]interface{}{"password": hashedPwd}, rec.ID); err != nil {
+	if err = s.udb.Update(ctx, s.db, map[string]interface{}{"password": hashedPwd}, rec.ID); err != nil {
 		return server.NewHTTPInternalError("Error changing password").SetInternal(err)
 	}
 

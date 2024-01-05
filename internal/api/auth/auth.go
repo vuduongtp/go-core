@@ -1,13 +1,13 @@
 package auth
 
 import (
+	"context"
 	"net/http"
 	"time"
 
+	"github.com/labstack/echo/v4"
 	"github.com/vuduongtp/go-core/internal/model"
 	"github.com/vuduongtp/go-core/pkg/server"
-
-	"github.com/labstack/echo/v4"
 )
 
 // Custom errors
@@ -18,7 +18,7 @@ var (
 )
 
 // LoginUser logs in the given user, returns access token
-func (s *Auth) LoginUser(u *model.User) (*model.AuthToken, error) {
+func (s *Auth) LoginUser(ctx context.Context, u *model.User) (*model.AuthToken, error) {
 	claims := map[string]interface{}{
 		"id":       u.ID,
 		"username": u.Username,
@@ -31,7 +31,7 @@ func (s *Auth) LoginUser(u *model.User) (*model.AuthToken, error) {
 	}
 
 	refreshToken := s.cr.UID()
-	err = s.udb.Update(s.db, map[string]interface{}{"refresh_token": refreshToken, "last_login": time.Now()}, u.ID)
+	err = s.udb.Update(ctx, s.db, map[string]interface{}{"refresh_token": refreshToken, "last_login": time.Now()}, u.ID)
 	if err != nil {
 		return nil, server.NewHTTPInternalError("Error updating user").SetInternal(err)
 	}
@@ -40,8 +40,8 @@ func (s *Auth) LoginUser(u *model.User) (*model.AuthToken, error) {
 }
 
 // Authenticate tries to authenticate the user provided by given credentials
-func (s *Auth) Authenticate(c echo.Context, data Credentials) (*model.AuthToken, error) {
-	usr, err := s.udb.FindByUsername(s.db, data.Username)
+func (s *Auth) Authenticate(ctx context.Context, data Credentials) (*model.AuthToken, error) {
+	usr, err := s.udb.FindByUsername(ctx, s.db, data.Username)
 	if err != nil || usr == nil {
 		return nil, ErrInvalidCredentials.SetInternal(err)
 	}
@@ -52,16 +52,16 @@ func (s *Auth) Authenticate(c echo.Context, data Credentials) (*model.AuthToken,
 		return nil, ErrUserBlocked
 	}
 
-	return s.LoginUser(usr)
+	return s.LoginUser(ctx, usr)
 }
 
 // RefreshToken returns the new access token with expired time extended
-func (s *Auth) RefreshToken(c echo.Context, data RefreshTokenData) (*model.AuthToken, error) {
-	usr, err := s.udb.FindByRefreshToken(s.db, data.RefreshToken)
+func (s *Auth) RefreshToken(ctx context.Context, data RefreshTokenData) (*model.AuthToken, error) {
+	usr, err := s.udb.FindByRefreshToken(ctx, s.db, data.RefreshToken)
 	if err != nil || usr == nil {
 		return nil, ErrInvalidRefreshToken.SetInternal(err)
 	}
-	return s.LoginUser(usr)
+	return s.LoginUser(ctx, usr)
 }
 
 // User returns user data stored in jwt token
