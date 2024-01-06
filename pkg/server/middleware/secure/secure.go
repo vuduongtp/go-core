@@ -6,7 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/thoas/go-funk"
+	"github.com/samber/lo"
 	"github.com/vuduongtp/go-core/pkg/util/logger"
 	"github.com/vuduongtp/go-logadapter"
 )
@@ -61,7 +61,7 @@ func BodyDump() echo.MiddlewareFunc {
 				}
 				reqBody, _ = json.Marshal(bodymap)
 			}
-			if funk.ContainsString([]string{"Content-Disposition: form-data"}, string(reqBody)) {
+			if lo.Contains([]string{"Content-Disposition: form-data"}, string(reqBody)) {
 				logger.LogWithContext(c.Request().Context(), "Request Body: multipart/form-data", logadapter.LogTypeRequest)
 			}
 			logger.LogWithContext(c.Request().Context(), string(reqBody), logadapter.LogTypeRequest)
@@ -77,7 +77,7 @@ func BodyDump() echo.MiddlewareFunc {
 				}
 				resBody, _ = json.Marshal(bodymap)
 			}
-			if funk.ContainsString([]string{"Content-Disposition: form-data"}, string(reqBody)) {
+			if lo.Contains([]string{"Content-Disposition: form-data"}, string(reqBody)) {
 				logger.LogWithContext(c.Request().Context(), "Request Body: multipart/form-data", logadapter.LogTypeResponse)
 			}
 			logger.LogWithContext(c.Request().Context(), string(resBody), logadapter.LogTypeResponse)

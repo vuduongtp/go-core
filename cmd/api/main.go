@@ -14,8 +14,8 @@ import (
 	"github.com/vuduongtp/go-core/pkg/server"
 	"github.com/vuduongtp/go-core/pkg/server/middleware/jwt"
 	"github.com/vuduongtp/go-core/pkg/util/crypter"
+	"github.com/vuduongtp/go-core/pkg/util/logger"
 	swaggerutil "github.com/vuduongtp/go-core/pkg/util/swagger"
-	"github.com/vuduongtp/go-logadapter"
 )
 
 //	@title			GoCore Example API
@@ -93,7 +93,7 @@ func main() {
 
 func checkErr(err error) {
 	if err != nil {
-		logadapter.Panic(err)
+		logger.LogPanic(err)
 		panic(err)
 	}
 }

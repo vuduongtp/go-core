@@ -98,7 +98,7 @@ func (ce *ErrorHandler) Handle(err error, c echo.Context) {
 			httpErr.Message = e.Message
 		}
 		if e.Internal != nil && !c.Response().Committed {
-			logger.LogError(c.Request().Context(), fmt.Sprintf("internal err: %+v", e.Internal))
+			logger.LogErrorf(c.Request().Context(), "internal err: %+v", e.Internal)
 		}
 
 	case *echo.HTTPError:
@@ -117,7 +117,7 @@ func (ce *ErrorHandler) Handle(err error, c echo.Context) {
 			httpErr.Message = fmt.Sprintf("%+v", em)
 		}
 		if e.Internal != nil && !c.Response().Committed {
-			logger.LogError(c.Request().Context(), fmt.Sprintf("internal err: %+v", e.Internal))
+			logger.LogErrorf(c.Request().Context(), "internal err: %+v", e.Internal)
 		}
 
 	case validator.ValidationErrors:

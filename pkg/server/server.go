@@ -108,6 +108,6 @@ func Start(e *echo.Echo, isDevelopment bool) {
 	defer cancel()
 	if err := e.Shutdown(ctx); err != nil {
 		// Error from closing listeners, or context timeout:
-		fmt.Printf("⇨ http server shutting down error: %v\n", err)
+		logadapter.Error(fmt.Sprintf("⇨ http server shutting down error: %v\n", err))
 	}
 }

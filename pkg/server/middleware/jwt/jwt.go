@@ -43,7 +43,7 @@ func (j *Service) MWFunc() echo.MiddlewareFunc {
 			token, err := j.ParseTokenFromHeader(c)
 			if err != nil || !token.Valid {
 				if err != nil {
-					logger.LogError(c.Request().Context(), fmt.Sprintf("error parsing token: %+v"+err.Error()))
+					logger.LogErrorf(c.Request().Context(), "error parsing token: %+v", err.Error())
 				}
 				return server.NewHTTPError(http.StatusUnauthorized, "UNAUTHORIZED", "Your session is unauthorized or has expired.").SetInternal(err)
 			}
