@@ -29,7 +29,7 @@ func TestLoad(t *testing.T) {
 				WriteTimeout: 5,
 				Debug:        true,
 				DbLog:        true,
-				DbDsn:        "postgres://ghoul:ghoul123@localhost:5432/ghoul?sslmode=disable&connect_timeout=5",
+				DbDsn:        "postgres://goccoe:goccoe123@localhost:5432/goccoe?sslmode=disable&connect_timeout=5",
 				JwtSecret:    "jwtsecret",
 				JwtDuration:  31536000,
 				JwtAlgorithm: "HS256",

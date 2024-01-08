@@ -27,7 +27,7 @@ fmt.Printf("generated sns arn: %s\n", deviceArn)
 
 // sample data for push notification
 datapayload := map[string]interface{}{
-	"ghoul": map[string]interface{}{
+	"goccoe": map[string]interface{}{
 		"type":   "message type",
 		"field1": "blah blah",
 		"field2": "ok",

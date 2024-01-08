@@ -50,6 +50,9 @@ type Intf interface {
 	CreateInBatches(ctx context.Context, db *gorm.DB, input interface{}, batchSize int) error
 	// ParseCond returns standard [sqlString, vars] format for query, powered by gowhere package (with default config)
 	ParseCond(cond ...interface{}) []interface{}
+	// DeletePermanently deletes record matching given conditions permanently.
+	// `cond` can be an instance of the model, then primary key will be used as the condition
+	DeletePermanently(ctx context.Context, db *gorm.DB, cond ...interface{}) error
 }
 
 // ListQueryCondition holds data used for db queries
@@ -134,6 +137,22 @@ func (cdb *DB) Delete(ctx context.Context, db *gorm.DB, cond ...interface{}) err
 
 	where := parseCond(cond...)
 	cdb.GDB = db.WithContext(ctx).Delete(cdb.Model, where...)
+	return cdb.GDB.Error
+}
+
+// DeletePermanently deletes record matching given conditions permanently.
+func (cdb *DB) DeletePermanently(ctx context.Context, db *gorm.DB, cond ...interface{}) error {
+	if len(cond) == 1 {
+		val := reflect.ValueOf(cond[0])
+		if val.Kind() == reflect.Ptr {
+			val = val.Elem()
+		}
+		if val.Kind() == reflect.Struct {
+			return db.Delete(cond[0]).Error
+		}
+	}
+	where := parseCond(cond...)
+	cdb.GDB = db.WithContext(ctx).Unscoped().Delete(cdb.Model, where...)
 	return cdb.GDB.Error
 }
 

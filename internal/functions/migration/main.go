@@ -23,6 +23,7 @@ type Base struct {
 	ID        int `gorm:"primary_key"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 // Run executes the migration
@@ -102,19 +103,19 @@ func Run() (respErr error) {
 					{
 						Username: "superadmin",
 						Password: os.Getenv("SUPERADMIN_PWD"),
-						Email:    "superadmin@ghoul.com",
+						Email:    "superadmin@example.com",
 						Role:     model.RoleSuperAdmin,
 					},
 					{
 						Username: "admin",
 						Password: os.Getenv("ADMIN_PWD"),
-						Email:    "admin@ghoul.com",
+						Email:    "admin@example.com",
 						Role:     model.RoleAdmin,
 					},
 					{
 						Username: "user",
 						Password: os.Getenv("USER_PWD"),
-						Email:    "user@ghoul.com",
+						Email:    "user@example.com",
 						Role:     model.RoleUser,
 					},
 				}

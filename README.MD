@@ -53,7 +53,8 @@ root\
    ```bash
    make dev
    ```
-
+4. Documentation Apis:
+GoCore uses swagger open api, navigate to `/docs/index.html` for getting the list endpoints.
 The application runs as an HTTP server at port 8080. You can log in as superadmin to the application by:
 
 ```http
@@ -83,3 +84,9 @@ Comming soon
 ```bash
 go get -u github.com/vuduongtp/go-core
 ```
+## Project References & Credits
+
+- [https://github.com/M15t/ghoul](https://github.com/M15t/ghoul)
+
+## License
+This project is made available under the MIT license. See [LICENSE](https://github.com/vuduongtp/go-core/blob/main/LICENSE) for details.

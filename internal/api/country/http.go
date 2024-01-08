@@ -77,9 +77,9 @@ type ListResp struct {
 // @ID				countriesCreate
 // @Param			request			body		country.CreationData	true	"CreationData"
 // @Success		200				{object}	model.AuthToken
-// @Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401				{object}	SwaggErrDetailsResp
+// @Failure		403				{object}	SwaggErrDetailsResp
+// @Failure		500				{object}	SwaggErrDetailsResp
 // @Router			/v1/countries	[post]
 func (h *HTTP) create(c echo.Context) error {
 	r := CreationData{}
@@ -111,9 +111,9 @@ func (h *HTTP) create(c echo.Context) error {
 // @ID				countriesView
 // @Param			id					path		int	true	"Country ID"
 // @Success		200					{object}	model.Country
-// @Failure		401					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500					{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401					{object}	SwaggErrDetailsResp
+// @Failure		403					{object}	SwaggErrDetailsResp
+// @Failure		500					{object}	SwaggErrDetailsResp
 // @Router			/v1/countries/{id}	[get]
 func (h *HTTP) view(c echo.Context) error {
 	id, err := httputil.ReqID(c)
@@ -137,10 +137,10 @@ func (h *HTTP) view(c echo.Context) error {
 // @ID				countriesList
 // @Param			q				query		swagger.ListRequest	false	"QueryListRequest"
 // @Success		200				{object}	country.ListResp
-// @Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		400				{object}	SwaggErrDetailsResp
+// @Failure		401				{object}	SwaggErrDetailsResp
+// @Failure		403				{object}	SwaggErrDetailsResp
+// @Failure		500				{object}	SwaggErrDetailsResp
 // @Router			/v1/countries	[get]
 func (h *HTTP) list(c echo.Context) error {
 	lq, err := httputil.ReqListQuery(c)
@@ -166,11 +166,11 @@ func (h *HTTP) list(c echo.Context) error {
 // @Param			id					path		int					true	"Country ID"
 // @Param			request				body		country.UpdateData	true	"UpdateData"
 // @Success		200					{object}	model.Country
-// @Failure		400					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		401					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		404					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500					{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		400					{object}	SwaggErrDetailsResp
+// @Failure		401					{object}	SwaggErrDetailsResp
+// @Failure		403					{object}	SwaggErrDetailsResp
+// @Failure		404					{object}	SwaggErrDetailsResp
+// @Failure		500					{object}	SwaggErrDetailsResp
 // @Router			/v1/countries/{id}	[patch]
 func (h *HTTP) update(c echo.Context) error {
 	id, err := httputil.ReqID(c)
@@ -201,12 +201,12 @@ func (h *HTTP) update(c echo.Context) error {
 // @Tags			countries
 // @ID				countriesDelete
 // @Param			id					path		int	true	"Country ID"
-// @Success		200					{object}	swaggerutil.SwaggOKResp
-// @Failure		400					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		401					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		404					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500					{object}	swaggerutil.SwaggErrDetailsResp
+// @Success		200					{object}	SwaggOKResp
+// @Failure		400					{object}	SwaggErrDetailsResp
+// @Failure		401					{object}	SwaggErrDetailsResp
+// @Failure		403					{object}	SwaggErrDetailsResp
+// @Failure		404					{object}	SwaggErrDetailsResp
+// @Failure		500					{object}	SwaggErrDetailsResp
 // @Router			/v1/countries/{id}	[delete]
 func (h *HTTP) delete(c echo.Context) error {
 	id, err := httputil.ReqID(c)

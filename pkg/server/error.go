@@ -23,7 +23,7 @@ const (
 // ErrorResponse represents the error response
 type ErrorResponse struct {
 	Error *HTTPError `json:"error"`
-}
+} // @name ErrorResponse
 
 // HTTPError represents an error that occurred while handling a request
 type HTTPError struct {
@@ -31,7 +31,7 @@ type HTTPError struct {
 	Type     string `json:"type"`
 	Message  string `json:"message"`
 	Internal error  `json:"-"`
-}
+} // @name ErrorResponse
 
 // NewHTTPError creates a new HTTPError instance
 func NewHTTPError(code int, etype string, message ...string) *HTTPError {

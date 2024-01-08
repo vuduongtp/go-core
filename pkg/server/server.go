@@ -12,6 +12,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
 	"github.com/vuduongtp/go-core/pkg/server/middleware/secure"
+	"github.com/vuduongtp/go-core/pkg/util/logger"
 	"github.com/vuduongtp/go-logadapter"
 )
 
@@ -92,9 +93,9 @@ func Start(e *echo.Echo, isDevelopment bool) {
 	go func() {
 		if err := e.StartServer(e.Server); err != nil {
 			if err == http.ErrServerClosed {
-				logadapter.Info("shutting down the server")
+				logger.Info("shutting down the server")
 			} else {
-				logadapter.Error("shutting down the server", err)
+				logger.Error("shutting down the server", err)
 			}
 		}
 	}()
@@ -108,6 +109,6 @@ func Start(e *echo.Echo, isDevelopment bool) {
 	defer cancel()
 	if err := e.Shutdown(ctx); err != nil {
 		// Error from closing listeners, or context timeout:
-		logadapter.Error(fmt.Sprintf("⇨ http server shutting down error: %v\n", err))
+		logger.Error(fmt.Sprintf("⇨ http server shutting down error: %v\n", err))
 	}
 }

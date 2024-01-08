@@ -67,7 +67,7 @@ clean: ## Clean up the built & test files
 specs: ## Generate swagger specs
 	swag fmt -g /cmd/api/main.go
 	swag fmt -d ./internal/api
-	swag init -g /cmd/api/main.go
+	swag init --parseInternal --parseDependency --parseDepth 1 -g /cmd/api/main.go
 
 up: ## Execute `up` commands per env. Ex: make up dev "logs -f"
 	sh scripts/up.sh $(filter-out $@,$(MAKECMDGOALS))

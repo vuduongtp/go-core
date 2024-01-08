@@ -47,8 +47,8 @@ type RefreshTokenData struct {
 // @ID				authLogin
 // @Param			request	body		auth.Credentials	true	"Credentials"
 // @Success		200		{object}	model.AuthToken
-// @Failure		401		{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500		{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401		{object}	SwaggErrDetailsResp
+// @Failure		500		{object}	SwaggErrDetailsResp
 // @Router			/login [post]
 func (h *HTTP) login(c echo.Context) error {
 	r := Credentials{}
@@ -71,8 +71,8 @@ func (h *HTTP) login(c echo.Context) error {
 // @ID				authRefreshToken
 // @Param			request	body		auth.RefreshTokenData	true	"RefreshTokenData"
 // @Success		200		{object}	model.AuthToken
-// @Failure		401		{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500		{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		401		{object}	SwaggErrDetailsResp
+// @Failure		500		{object}	SwaggErrDetailsResp
 // @Router			/refresh-token [post]
 func (h *HTTP) refreshToken(c echo.Context) error {
 	r := RefreshTokenData{}

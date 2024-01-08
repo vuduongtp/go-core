@@ -45,7 +45,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/auth.Credentials"
+                            "$ref": "#/definitions/internal_api_auth.Credentials"
                         }
                     }
                 ],
@@ -53,19 +53,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.AuthToken"
+                            "$ref": "#/definitions/AuthToken"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -92,7 +92,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/auth.RefreshTokenData"
+                            "$ref": "#/definitions/internal_api_auth.RefreshTokenData"
                         }
                     }
                 ],
@@ -100,19 +100,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.AuthToken"
+                            "$ref": "#/definitions/AuthToken"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -180,31 +180,31 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/country.ListResp"
+                            "$ref": "#/definitions/internal_api_country.ListResp"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -234,7 +234,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/country.CreationData"
+                            "$ref": "#/definitions/internal_api_country.CreationData"
                         }
                     }
                 ],
@@ -242,25 +242,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.AuthToken"
+                            "$ref": "#/definitions/AuthToken"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -298,25 +298,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.Country"
+                            "$ref": "#/definitions/Country"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -352,37 +352,37 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggOKResp"
+                            "$ref": "#/definitions/SwaggOKResp"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -419,7 +419,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/country.UpdateData"
+                            "$ref": "#/definitions/internal_api_country.UpdateData"
                         }
                     }
                 ],
@@ -427,37 +427,37 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.Country"
+                            "$ref": "#/definitions/Country"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -525,31 +525,31 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/user.ListResp"
+                            "$ref": "#/definitions/internal_api_user.ListResp"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -579,7 +579,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.CreationData"
+                            "$ref": "#/definitions/internal_api_user.CreationData"
                         }
                     }
                 ],
@@ -587,31 +587,31 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.User"
+                            "$ref": "#/definitions/User"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -640,37 +640,37 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.User"
+                            "$ref": "#/definitions/User"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -702,7 +702,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.PasswordChangeData"
+                            "$ref": "#/definitions/internal_api_user.PasswordChangeData"
                         }
                     }
                 ],
@@ -710,37 +710,37 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggOKResp"
+                            "$ref": "#/definitions/SwaggOKResp"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -778,37 +778,37 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.User"
+                            "$ref": "#/definitions/User"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -844,37 +844,37 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggOKResp"
+                            "$ref": "#/definitions/SwaggOKResp"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -911,7 +911,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.UpdateData"
+                            "$ref": "#/definitions/internal_api_user.UpdateData"
                         }
                     }
                 ],
@@ -919,37 +919,37 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.User"
+                            "$ref": "#/definitions/User"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "403": {
                         "description": "Forbidden",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/swaggerutil.SwaggErrDetailsResp"
+                            "$ref": "#/definitions/SwaggErrDetailsResp"
                         }
                     }
                 }
@@ -957,100 +957,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "auth.Credentials": {
-            "type": "object",
-            "required": [
-                "password",
-                "username"
-            ],
-            "properties": {
-                "password": {
-                    "type": "string",
-                    "example": "superadmin123!@#"
-                },
-                "username": {
-                    "type": "string",
-                    "example": "superadmin"
-                }
-            }
-        },
-        "auth.RefreshTokenData": {
-            "type": "object",
-            "required": [
-                "refresh_token"
-            ],
-            "properties": {
-                "refresh_token": {
-                    "type": "string"
-                }
-            }
-        },
-        "country.CreationData": {
-            "type": "object",
-            "required": [
-                "code",
-                "name",
-                "phone_code"
-            ],
-            "properties": {
-                "code": {
-                    "description": "example: vn",
-                    "type": "string",
-                    "maxLength": 10,
-                    "minLength": 2
-                },
-                "name": {
-                    "description": "example: Vietnam",
-                    "type": "string",
-                    "minLength": 3
-                },
-                "phone_code": {
-                    "description": "example: +84",
-                    "type": "string",
-                    "maxLength": 10,
-                    "minLength": 2
-                }
-            }
-        },
-        "country.ListResp": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "description": "example: [{\"id\": 1, \"created_at\": \"2020-01-14T10:03:41Z\", \"updated_at\": \"2020-01-14T10:03:41Z\", \"name\": \"Singapore\", \"code\": \"SG\", \"phone_code\": \"+65\"}]",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Country"
-                    }
-                },
-                "total_count": {
-                    "description": "example: 1",
-                    "type": "integer"
-                }
-            }
-        },
-        "country.UpdateData": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "description": "example: vn",
-                    "type": "string",
-                    "maxLength": 10,
-                    "minLength": 2
-                },
-                "name": {
-                    "description": "example: Vietnam",
-                    "type": "string",
-                    "minLength": 3
-                },
-                "phone_code": {
-                    "description": "example: +84",
-                    "type": "string",
-                    "maxLength": 10,
-                    "minLength": 2
-                }
-            }
-        },
-        "model.AuthToken": {
+        "AuthToken": {
             "type": "object",
             "properties": {
                 "access_token": {
@@ -1067,7 +974,7 @@ const docTemplate = `{
                 }
             }
         },
-        "model.Country": {
+        "Country": {
             "type": "object",
             "properties": {
                 "code": {
@@ -1076,6 +983,14 @@ const docTemplate = `{
                 "created_at": {
                     "description": "The time that record is created",
                     "type": "string"
+                },
+                "deleted_at": {
+                    "description": "DeletedAt *time.Time ` + "`" + `json:\"deleted_at\" sql:\"index\"` + "`" + `",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/gorm.DeletedAt"
+                        }
+                    ]
                 },
                 "id": {
                     "description": "ID of the record",
@@ -1093,7 +1008,32 @@ const docTemplate = `{
                 }
             }
         },
-        "model.User": {
+        "ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "SwaggErrDetailsResp": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/ErrorResponse"
+                }
+            }
+        },
+        "SwaggOKResp": {
+            "type": "object"
+        },
+        "User": {
             "type": "object",
             "properties": {
                 "blocked": {
@@ -1102,6 +1042,14 @@ const docTemplate = `{
                 "created_at": {
                     "description": "The time that record is created",
                     "type": "string"
+                },
+                "deleted_at": {
+                    "description": "DeletedAt *time.Time ` + "`" + `json:\"deleted_at\" sql:\"index\"` + "`" + `",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/gorm.DeletedAt"
+                        }
+                    ]
                 },
                 "email": {
                     "type": "string"
@@ -1134,32 +1082,112 @@ const docTemplate = `{
                 }
             }
         },
-        "server.HTTPError": {
+        "gorm.DeletedAt": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if Time is not NULL",
+                    "type": "boolean"
+                }
+            }
+        },
+        "internal_api_auth.Credentials": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "example": "superadmin123!@#"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "superadmin"
+                }
+            }
+        },
+        "internal_api_auth.RefreshTokenData": {
+            "type": "object",
+            "required": [
+                "refresh_token"
+            ],
+            "properties": {
+                "refresh_token": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal_api_country.CreationData": {
+            "type": "object",
+            "required": [
+                "code",
+                "name",
+                "phone_code"
+            ],
+            "properties": {
+                "code": {
+                    "description": "example: vn",
+                    "type": "string",
+                    "maxLength": 10,
+                    "minLength": 2
+                },
+                "name": {
+                    "description": "example: Vietnam",
+                    "type": "string",
+                    "minLength": 3
+                },
+                "phone_code": {
+                    "description": "example: +84",
+                    "type": "string",
+                    "maxLength": 10,
+                    "minLength": 2
+                }
+            }
+        },
+        "internal_api_country.ListResp": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "description": "example: [{\"id\": 1, \"created_at\": \"2020-01-14T10:03:41Z\", \"updated_at\": \"2020-01-14T10:03:41Z\", \"name\": \"Singapore\", \"code\": \"SG\", \"phone_code\": \"+65\"}]",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Country"
+                    }
+                },
+                "total_count": {
+                    "description": "example: 1",
+                    "type": "integer"
+                }
+            }
+        },
+        "internal_api_country.UpdateData": {
             "type": "object",
             "properties": {
                 "code": {
-                    "type": "integer"
+                    "description": "example: vn",
+                    "type": "string",
+                    "maxLength": 10,
+                    "minLength": 2
                 },
-                "message": {
-                    "type": "string"
+                "name": {
+                    "description": "example: Vietnam",
+                    "type": "string",
+                    "minLength": 3
                 },
-                "type": {
-                    "type": "string"
+                "phone_code": {
+                    "description": "example: +84",
+                    "type": "string",
+                    "maxLength": 10,
+                    "minLength": 2
                 }
             }
         },
-        "swaggerutil.SwaggErrDetailsResp": {
-            "type": "object",
-            "properties": {
-                "error": {
-                    "$ref": "#/definitions/server.HTTPError"
-                }
-            }
-        },
-        "swaggerutil.SwaggOKResp": {
-            "type": "object"
-        },
-        "user.CreationData": {
+        "internal_api_user.CreationData": {
             "type": "object",
             "required": [
                 "email",
@@ -1199,13 +1227,13 @@ const docTemplate = `{
                 }
             }
         },
-        "user.ListResp": {
+        "internal_api_user.ListResp": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.User"
+                        "$ref": "#/definitions/User"
                     }
                 },
                 "total_count": {
@@ -1213,7 +1241,7 @@ const docTemplate = `{
                 }
             }
         },
-        "user.PasswordChangeData": {
+        "internal_api_user.PasswordChangeData": {
             "type": "object",
             "required": [
                 "new_password",
@@ -1233,7 +1261,7 @@ const docTemplate = `{
                 }
             }
         },
-        "user.UpdateData": {
+        "internal_api_user.UpdateData": {
             "type": "object",
             "properties": {
                 "blocked": {

@@ -87,10 +87,10 @@ type ListResp struct {
 // @ID				usersCreate
 // @Param			request		body		user.CreationData	true	"CreationData"
 // @Success		200			{object}	model.User
-// @Failure		400			{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		401			{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403			{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500			{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		400			{object}	SwaggErrDetailsResp
+// @Failure		401			{object}	SwaggErrDetailsResp
+// @Failure		403			{object}	SwaggErrDetailsResp
+// @Failure		500			{object}	SwaggErrDetailsResp
 // @Router			/v1/users	[post]
 func (h *HTTP) create(c echo.Context) error {
 	r := CreationData{}
@@ -124,11 +124,11 @@ func (h *HTTP) create(c echo.Context) error {
 // @ID				usersView
 // @Param			id				path		int	true	"User ID"
 // @Success		200				{object}	model.User
-// @Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		400				{object}	SwaggErrDetailsResp
+// @Failure		401				{object}	SwaggErrDetailsResp
+// @Failure		403				{object}	SwaggErrDetailsResp
+// @Failure		404				{object}	SwaggErrDetailsResp
+// @Failure		500				{object}	SwaggErrDetailsResp
 // @Router			/v1/users/{id}	[get]
 func (h *HTTP) view(c echo.Context) error {
 	id, err := httputil.ReqID(c)
@@ -152,10 +152,10 @@ func (h *HTTP) view(c echo.Context) error {
 // @ID				usersList
 // @Param			q			query		swagger.ListRequest	false	"QueryListRequest"
 // @Success		200			{object}	user.ListResp
-// @Failure		400			{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		401			{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403			{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500			{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		400			{object}	SwaggErrDetailsResp
+// @Failure		401			{object}	SwaggErrDetailsResp
+// @Failure		403			{object}	SwaggErrDetailsResp
+// @Failure		500			{object}	SwaggErrDetailsResp
 // @Router			/v1/users	[get]
 func (h *HTTP) list(c echo.Context) error {
 	lq, err := httputil.ReqListQuery(c)
@@ -181,11 +181,11 @@ func (h *HTTP) list(c echo.Context) error {
 // @Param			id				path		int				true	"User ID"
 // @Param			request			body		user.UpdateData	true	"UpdateData"
 // @Success		200				{object}	model.User
-// @Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		400				{object}	SwaggErrDetailsResp
+// @Failure		401				{object}	SwaggErrDetailsResp
+// @Failure		403				{object}	SwaggErrDetailsResp
+// @Failure		404				{object}	SwaggErrDetailsResp
+// @Failure		500				{object}	SwaggErrDetailsResp
 // @Router			/v1/users/{id}	[patch]
 func (h *HTTP) update(c echo.Context) error {
 	id, err := httputil.ReqID(c)
@@ -222,12 +222,12 @@ func (h *HTTP) update(c echo.Context) error {
 // @Tags			users
 // @ID				usersDelete
 // @Param			id				path		int	true	"User ID"
-// @Success		200				{object}	swaggerutil.SwaggOKResp
-// @Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
+// @Success		200				{object}	SwaggOKResp
+// @Failure		400				{object}	SwaggErrDetailsResp
+// @Failure		401				{object}	SwaggErrDetailsResp
+// @Failure		403				{object}	SwaggErrDetailsResp
+// @Failure		404				{object}	SwaggErrDetailsResp
+// @Failure		500				{object}	SwaggErrDetailsResp
 // @Router			/v1/users/{id}	[delete]
 func (h *HTTP) delete(c echo.Context) error {
 	id, err := httputil.ReqID(c)
@@ -249,11 +249,11 @@ func (h *HTTP) delete(c echo.Context) error {
 // @Tags			users
 // @ID				usersMe
 // @Success		200				{object}	model.User
-// @Failure		400				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		401				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		404				{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500				{object}	swaggerutil.SwaggErrDetailsResp
+// @Failure		400				{object}	SwaggErrDetailsResp
+// @Failure		401				{object}	SwaggErrDetailsResp
+// @Failure		403				{object}	SwaggErrDetailsResp
+// @Failure		404				{object}	SwaggErrDetailsResp
+// @Failure		500				{object}	SwaggErrDetailsResp
 // @Router			/v1/users/me	[get]
 func (h *HTTP) me(c echo.Context) error {
 	resp, err := h.svc.Me(c.Request().Context(), h.auth.User(c))
@@ -272,12 +272,12 @@ func (h *HTTP) me(c echo.Context) error {
 // @Tags			users
 // @ID				usersChangePwd
 // @Param			request				body		user.PasswordChangeData	true	"PasswordChangeData"
-// @Success		200					{object}	swaggerutil.SwaggOKResp
-// @Failure		400					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		401					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		403					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		404					{object}	swaggerutil.SwaggErrDetailsResp
-// @Failure		500					{object}	swaggerutil.SwaggErrDetailsResp
+// @Success		200					{object}	SwaggOKResp
+// @Failure		400					{object}	SwaggErrDetailsResp
+// @Failure		401					{object}	SwaggErrDetailsResp
+// @Failure		403					{object}	SwaggErrDetailsResp
+// @Failure		404					{object}	SwaggErrDetailsResp
+// @Failure		500					{object}	SwaggErrDetailsResp
 // @Router			/v1/users/password	[get]
 func (h *HTTP) changePassword(c echo.Context) error {
 	r := PasswordChangeData{}

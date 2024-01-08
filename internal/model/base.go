@@ -2,6 +2,8 @@ package model
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 // Base contains common fields for all models
@@ -14,4 +16,5 @@ type Base struct {
 	// The latest time that record is updated
 	UpdatedAt time.Time `json:"updated_at"`
 	// DeletedAt *time.Time `json:"deleted_at" sql:"index"`
-}
+	DeletedAt gorm.DeletedAt `json:"deleted_at" gorm:"index"`
+} // @name Base

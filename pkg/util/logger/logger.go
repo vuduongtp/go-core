@@ -28,9 +28,14 @@ func LogWarn(ctx context.Context, content interface{}) {
 	logadapter.LogWithContext(ctx, content, logadapter.LogTypeWarn)
 }
 
-// LogPanic log panic
-func LogPanic(content ...interface{}) {
-	logadapter.Panic(content...)
+// LogResponse for logging respone of api with request_id and correlation_id
+func LogResponse(ctx context.Context, content interface{}) {
+	logadapter.LogWithContext(ctx, content, logadapter.LogTypeResponse)
+}
+
+// LogRequest for logging request of api with request_id and correlation_id
+func LogRequest(ctx context.Context, content interface{}) {
+	logadapter.LogWithContext(ctx, content, logadapter.LogTypeRequest)
 }
 
 // LogErrorf for logging errors with context to log request_id and correlation_id
@@ -69,4 +74,39 @@ func Ctx(ctx context.Context) *logrus.Entry {
 // AddLogField add more log field to context
 func AddLogField(ctx context.Context, key string, value interface{}) context.Context {
 	return logadapter.SetCustomLogField(ctx, key, value)
+}
+
+// Panic log panic
+func Panic(content ...interface{}) {
+	logadapter.Panic(content...)
+}
+
+// Fatal log panic
+func Fatal(content ...interface{}) {
+	logadapter.Fatal(content...)
+}
+
+// Error log panic
+func Error(content ...interface{}) {
+	logadapter.Error(content...)
+}
+
+// Warn log panic
+func Warn(content ...interface{}) {
+	logadapter.Warn(content...)
+}
+
+// Info log panic
+func Info(content ...interface{}) {
+	logadapter.Info(content...)
+}
+
+// Debug log panic
+func Debug(content ...interface{}) {
+	logadapter.Debug(content...)
+}
+
+// Trace log panic
+func Trace(content ...interface{}) {
+	logadapter.Trace(content...)
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/vuduongtp/go-core/internal/api/auth"
 	"github.com/vuduongtp/go-core/internal/api/country"
 	"github.com/vuduongtp/go-core/internal/api/user"
+	userdb "github.com/vuduongtp/go-core/internal/db/user"
 	"github.com/vuduongtp/go-core/internal/rbac"
 	dbutil "github.com/vuduongtp/go-core/internal/util/db"
 	"github.com/vuduongtp/go-core/pkg/server"
@@ -66,7 +67,7 @@ func main() {
 	}
 
 	// Initialize DB interfaces
-	userDB := user.NewDB()
+	userDB := userdb.NewDB()
 	countryDB := country.NewDB()
 
 	// Initialize services
@@ -93,7 +94,7 @@ func main() {
 
 func checkErr(err error) {
 	if err != nil {
-		logger.LogPanic(err)
+		logger.Panic(err)
 		panic(err)
 	}
 }
